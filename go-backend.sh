@@ -59,7 +59,7 @@ function install_latest_golang() {
 		exit 1
   fi
 
-  PACKAGE_NAME="go$VERSION.$PLATFORM.tar.gz"
+  PACKAGE_NAME="$VERSION.$PLATFORM.tar.gz"
 
   echo "Downloading $PACKAGE_NAME ..."
   if hash wget 2>/dev/null; then
