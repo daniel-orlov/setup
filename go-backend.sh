@@ -15,6 +15,12 @@ function determine_shell_profile() {
 	fi
 }
 
+
+function install_curl() {
+	echo 'Installing curl'
+	sudo apt install curl
+}
+
 function install_snap() {
 	echo 'Installing snap'
 	snap --version || sudo apt install snapd
@@ -224,6 +230,7 @@ function install_redis_cli() {
 function main() {
 #	Prepare for installation
 	sudo apt update
+	install_curl
 	install_snap
 	determine_shell_profile
 
