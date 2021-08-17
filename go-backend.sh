@@ -101,7 +101,6 @@ function install_docker() {
 	./get-docker.sh
 
 	# Make docker run w/o sudo
-	sudo groupadd docker
 	sudo gpasswd -a "$USER" docker
 	sudo service docker restart
 }
