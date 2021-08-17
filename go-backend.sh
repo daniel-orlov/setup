@@ -11,7 +11,7 @@ function determine_shell_profile() {
 	if [ -n "$($SHELL -c 'echo $ZSH_VERSION')" ]; then
 		export SHELL_PROFILE="zshrc"
 	elif [ -n "$($SHELL -c 'echo $BASH_VERSION')" ]; then
-			export SHELL_PROFILE="bashrc"
+		export SHELL_PROFILE="bashrc"
 	fi
 }
 
