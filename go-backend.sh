@@ -30,8 +30,8 @@ function install_snap() {
 function install_latest_golang() {
   VERSION="$(curl -s https://golang.org/VERSION?m=text)"
 
-  [ -z "$GOROOT" ] && GOROOT="$HOME/.go"
-  [ -z "$GOPATH" ] && GOPATH="$HOME/go"
+  GOROOT="$HOME/.go"
+  GOPATH="$HOME/go"
 
   OS="$(uname -s)"
   ARCH="$(uname -m)"
