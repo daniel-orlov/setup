@@ -167,7 +167,7 @@ function install_go_tools() {
 	echo '----------Installing Go tools----------'
 	# Integration with Goland :
   # File > Settings > Tools > File watchers > Add > choose 'golangci-lint'
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.42.0
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)"/bin v1.42.0
 	#	Adding linters
 	golangci-lint linters --enable prealloc,predeclared,revive,wastedassign,wsl
 	# Installing tools
