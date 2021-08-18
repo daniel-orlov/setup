@@ -36,13 +36,35 @@ function install_cc() {
 	sudo apt install gcc
 }
 
+function install_vim() {
+	echo '----------Installing vim----------'
+	sudo apt install vim
+}
+
 function install_basics() {
 	install_curl
 	install_snap
 	install_git
 	install_make
 	install_cc
+	install_vim
 }
+
+function install_wireguard() {
+	echo '----------Installing wireguard----------'
+	sudo apt install wireguard-tools
+  sudo apt install resolvconf
+
+  {
+  		echo ""
+  		echo "# Wireguard"
+  		echo "alias vpnon='wg-quick up do'"
+  		echo "alias vpnoff='wg-quick down do'"
+  		echo "alias vpnawson='wg-quick up aws'"
+      echo "alias vpnawsoff='wg-quick down aws'"
+  } >> "$HOME/.bashrc"
+}
+
 
 # Installing latest golang version
 function install_latest_golang() {
@@ -83,8 +105,8 @@ function install_latest_golang() {
 		echo "export GOPATH=${GOPATH}"
 		echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH"
 	} >> "$HOME/.bashrc"
-  
-	source ~/.bashrc
+	source "$HOME"/.bashrc
+
 	echo -e "\nGo $VERSION was installed into $GOROOT."
 
 	rm -f /tmp/go.tar.gz
@@ -127,13 +149,14 @@ function install_kubectl() {
 
 	touch "$HOME/.bashrc"
 	{
+		echo ""
 		echo "# Kubectl"
 		echo "export KUBE_EDITOR=vim"
 		echo "source <(kubectl completion bash)"
 		echo "alias k=kubectl"
 		echo "complete -F __start_kubectl k"
 	} >> "$HOME/.bashrc"
-	source ~/.bashrc
+	source "$HOME"/.bashrc
 }
 
 function install_slack() {
@@ -200,8 +223,8 @@ function install_krew() {
 		echo "# Krew"
 		echo "export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH""
 	} >> "$HOME/.bashrc"
-	
-	source ~/.bashrc
+	source "$HOME"/.bashrc
+
 	# installing context switcher
 	kubectl krew install ctx
 	sudo apt-get update
@@ -254,6 +277,9 @@ function main() {
 #	Install API tools
 	install_postman
 	install_bloomrpc
+
+# Install VPN tools
+	install_wireguard
 
 #	Install distraction machine
 	install_slack
