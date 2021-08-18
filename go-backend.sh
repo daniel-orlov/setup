@@ -7,6 +7,42 @@ set -o nounset;
 # debug commands
 # set -x;
 
+function main() {
+#	Prepare for installation
+	sudo apt update
+	install_basics
+
+#	Begin work environment setup
+#	Install Golang and Ops tools
+	install_latest_golang
+	install_go_tools
+	install_docker
+	install_kubectl
+	install_kind
+	install_helm
+	install_k9s
+	install_lens
+	install_krew
+
+#	Install IDE
+	install_goland
+	install_pycharm
+
+#	Install db clients
+	install_clickhouse_client
+	install_psql
+	install_redis_cli
+
+#	Install API tools
+	install_postman
+	install_bloomrpc
+
+# Install VPN tools
+	install_wireguard
+
+#	Install distraction machine
+	install_slack
+}
 
 function install_curl() {
 	echo '----------Installing curl----------'
@@ -21,6 +57,13 @@ function install_snap() {
 function install_git() {
 	echo '----------Installing git----------'
 	sudo apt install git
+
+	{
+    	echo ""
+    	echo "# Git"
+    	echo "export GIT_SSH_COMMAND="ssh -i ~/.ssh/""
+  } >> "$HOME/.bashrc"
+	source "$HOME"/.bashrc
 }
 
 
@@ -29,6 +72,10 @@ function install_make() {
 	sudo apt install make
 }
 
+function install_pip() {
+	echo '----------Installing pip----------'
+	sudo apt install python3-pip
+}
 
 function install_cc() {
 	echo '----------Installing cc----------'
@@ -48,6 +95,7 @@ function install_basics() {
 	install_make
 	install_cc
 	install_vim
+	install_pip
 }
 
 function install_wireguard() {
@@ -113,6 +161,18 @@ function install_latest_golang() {
 	unset PACKAGE_NAME
 	unset VERSION
 	unset PLATFORM
+}
+
+function install_go_tools() {
+	echo '----------Installing Go tools----------'
+	# Integration with Goland :
+  # File > Settings > Tools > File watchers > Add > choose 'golangci-lint'
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.42.0
+	#	Adding linters
+	golangci-lint linters --enable prealloc,predeclared,revive,wastedassign,wsl
+	# Installing tools
+	go get golang.org/x/tools/cmd/goimports
+	go get -u github.com/sqs/goreturns
 }
 
 function install_docker() {
@@ -247,42 +307,6 @@ function install_pycharm() {
 function install_redis_cli() {
 	echo '-----------Installing Redis CLI----------'
 	sudo apt install redis-tools
-}
-
-function main() {
-#	Prepare for installation
-	sudo apt update
-	install_basics
-
-#	Begin work environment setup
-#	Install Golang and Ops tools
-	install_latest_golang
-	install_docker
-	install_kubectl
-	install_kind
-	install_helm
-	install_k9s
-	install_lens
-	install_krew
-
-#	Install IDE
-	install_goland
-	install_pycharm
-
-#	Install db clients
-	install_clickhouse_client
-	install_psql
-	install_redis_cli
-
-#	Install API tools
-	install_postman
-	install_bloomrpc
-
-# Install VPN tools
-	install_wireguard
-
-#	Install distraction machine
-	install_slack
 }
 
 onexit() {
