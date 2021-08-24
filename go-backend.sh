@@ -173,6 +173,7 @@ function install_go_tools() {
 	# Installing tools
 	go get golang.org/x/tools/cmd/goimports
 	go get -u github.com/sqs/goreturns
+	go install github.com/golang/mock/mockgen@v1.6.0
 }
 
 function install_docker() {
